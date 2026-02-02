@@ -7,3 +7,4 @@ package-lock.json
 /sample
 fetch.js
 .vscode/launch.json
+.babelrc
