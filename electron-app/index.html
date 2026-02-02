@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Creators API Electron</title>
+<!-- Tailwind CDN -->	
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<div class="bg-white p-6 rounded shadow mb-6">
+  <h2 class="font-bold text-lg mb-4">API 設定</h2>
+
+  <input id="cid" placeholder="CredentialId" class="input" />
+  <input id="secret" placeholder="CredentialSecret" class="input mt-2" />
+  <input id="partner" placeholder="PartnerTag" class="input mt-2" />
+
+  <select id="version" class="input mt-2">
+    <option value="2.3">2.3</option>
+    <option value="2.2">2.2</option>
+    <option value="2.1">2.1</option>
+  </select>
+
+  <button id="save"
+    class="mt-4 bg-green-600 text-white px-4 py-2 rounded">
+    保存
+  </button>
+</div>
+
+<style>
+.input {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+}
+</style>
+  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-xl">
+    <h1 class="text-xl font-bold mb-4">
+      Amazon 商品情報取得
+    </h1>
+    <input
+      id="input"
+      type="text"
+      value="B0CDRZHRML"
+      placeholder="ASIN または Amazon URL"
+      class="w-full border rounded px-3 py-2 mb-3 focus:outline-none focus:ring focus:ring-blue-300"
+    />
+    <button
+      id="fetch"
+      class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+    >
+      取得
+    </button>
+    <p>サンプル表示</p>
+<div id="item"></div>
+    <pre
+      id="result"
+      class="mt-4 bg-gray-50 text-sm p-3 rounded overflow-auto max-h-96"
+    ></pre>
+    <p>貼り付け用HTML</p>
+<textarea 
+id="card"
+  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 resize-y"
+  rows="4"
+  placeholder="ここにメッセージを入力..."
+></textarea>
+  <script src="renderer.js"></script>
+</body>
+</html>
