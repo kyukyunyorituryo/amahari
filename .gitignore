@@ -1,0 +1,9 @@
+/node_modules
+/json
+/dist
+/src
+.env
+package-lock.json
+/sample
+fetch.js
+.vscode/launch.json
