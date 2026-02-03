@@ -7,33 +7,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-<div class="bg-white p-6 rounded shadow mb-6">
-  <h2 class="font-bold text-lg mb-4">API 設定</h2>
 
-  <input id="cid" placeholder="CredentialId" class="input" />
-  <input id="secret" placeholder="CredentialSecret" class="input mt-2" />
-  <input id="partner" placeholder="PartnerTag" class="input mt-2" />
 
-  <select id="version" class="input mt-2">
-    <option value="2.3">2.3</option>
-    <option value="2.2">2.2</option>
-    <option value="2.1">2.1</option>
-  </select>
-
-  <button id="save"
-    class="mt-4 bg-green-600 text-white px-4 py-2 rounded">
-    保存
-  </button>
-</div>
-
-<style>
-.input {
-  width: 100%;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 6px;
-}
-</style>
   <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-xl">
     <h1 class="text-xl font-bold mb-4">
       Amazon 商品情報取得
@@ -64,6 +39,80 @@ id="card"
   rows="4"
   placeholder="ここにメッセージを入力..."
 ></textarea>
+
+<button
+  id="toggleConfig"
+  class="mb-2 px-4 py-2 bg-gray-700 text-white rounded"
+>
+  ▶ Creators API 設定
+</button>
+
+<div id="configPanel" class="hidden bg-white p-6 rounded shadow mb-6">
+  <h2 class="font-bold text-lg mb-4">API 設定</h2>
+
+  <input id="cid" placeholder="CredentialId" class="input" />
+  <input id="secret" placeholder="CredentialSecret" class="input mt-2" />
+  <input id="partner" placeholder="PartnerTag" class="input mt-2" />
+
+  <select id="version" class="input mt-2">
+    <option value="2.3">2.3</option>
+    <option value="2.2">2.2</option>
+    <option value="2.1">2.1</option>
+  </select>
+
+  <button id="save"
+    class="mt-4 bg-green-600 text-white px-4 py-2 rounded">
+    保存
+  </button>
+</div>
+
+<style>
+.input {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+}
+</style>
+
+<!-- 設定トグル -->
+<button id="toggleSettings"
+  class="mb-2 px-4 py-2 bg-gray-700 text-white rounded">
+  設定を開く
+</button>
+
+<!-- 設定エリア -->
+<div id="settingsPanel" class="hidden border rounded p-4 space-y-4">
+
+  <!-- API設定（省略） -->
+
+  <!-- ブログテンプレート -->
+  <div>
+    <label class="block font-semibold mb-1">
+      ブログ貼付用HTMLテンプレート
+    </label>
+
+    <p class="text-sm text-gray-500 mb-1">
+      使用可能変数: {title}, {image}, {price}, {url}
+    </p>
+
+    <textarea id="blogTemplate"
+      class="w-full h-48 border rounded p-2 font-mono text-sm"><div class="amazon-card">
+  <a href="{url}" target="_blank">
+    <img src="{image}" alt="{title}">
+    <h3>{title}</h3>
+    <p>{price}</p>
+  </a>
+</div>
+    </textarea>
+  </div>
+
+  <button id="saveConfig"
+    class="px-4 py-2 bg-blue-600 text-white rounded">
+    保存
+  </button>
+</div>
+
   <script src="renderer.js"></script>
 </body>
 </html>

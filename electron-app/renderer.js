@@ -1,34 +1,36 @@
-document.getElementById('fetch').onclick = async () => {
+let currentConfig = {};
 
+document.getElementById('fetch').onclick = async () => {
   const input = document.getElementById('input').value;
   const asin = normalizeAsinOrUrl(input);
-  const result = await window.api.fetchItem(asin);
- const el = document.getElementById('item');
-  const item=result
-  el.innerHTML = `<div class="flex gap-4">
-    <img src="${item.images.primary.medium.url}" class="w-32 rounded shadow" />
-    <div>
-      <h2 class="font-bold text-lg">${item.itemInfo.title.displayValue}</h2>
-      <p class="text-red-600 font-semibold">${item.offersV2.listings[0].price.money.displayAmount ?? ''}</p>
-      <a href="${item.detailPageURL}" class="text-blue-600 underline button" target="_blank">
-        Amazonで見る
-      </a>
-    </div>
-  </div>`;
- const textarea = document.getElementById('card');
-const html = `<div class="flex gap-4">
-    <img src="${item.images.primary.medium.url}" class="w-32 rounded shadow" />
-    <div>
-      <h2 class="font-bold text-lg">${item.itemInfo.title.displayValue}</h2>
-      <p class="text-red-600 font-semibold">${item.offersV2.listings[0].price.money.displayAmount ?? ''}</p>
-      <a href="${item.detailPageURL}" class="text-blue-600 underline" target="_blank">
-        Amazonで見る
-      </a>
-    </div>
-  </div>`;
+  if (!asin) return alert('ASINまたはAmazon URLを入力してください');
 
-textarea.value = html;
+  const item = await window.api.fetchItem(asin);
+  if (!item) return alert('商品が取得できませんでした');
+
+  document.getElementById('item').innerHTML = `
+    <div class="flex gap-4">
+      <img src="${item.images.primary.medium.url}" class="w-32 rounded shadow" />
+      <div>
+        <h2 class="font-bold text-lg">
+          ${item.itemInfo.title.displayValue}
+        </h2>
+        <p class="text-red-600 font-semibold">
+          ${item.offersV2.listings[0]?.price?.displayAmount ?? ''}
+        </p>
+        <a href="${item.detailPageURL}" target="_blank"
+          class="text-blue-600 underline">
+          Amazonで見る
+        </a>
+      </div>
+    </div>
+  `;
+
+  const html = renderBlogHTML(currentConfig.blogTemplate, item);
+  document.getElementById('card').value = html;
+  navigator.clipboard.writeText(html);
 };
+
 
 function normalizeAsinOrUrl(input) {
   if (!input) return null;
@@ -59,12 +61,17 @@ function normalizeAsinOrUrl(input) {
   return null;
 }
 async function loadConfig() {
-  const config = await window.api.loadConfig();
-  document.getElementById('cid').value = config.CredentialId;
-  document.getElementById('secret').value = config.CredentialSecret;
-  document.getElementById('partner').value = config.PartnerTag;
-  document.getElementById('version').value = config.Version;
+  currentConfig = await window.api.loadConfig();
+
+  document.getElementById('cid').value = currentConfig.CredentialId;
+  document.getElementById('secret').value = currentConfig.CredentialSecret;
+  document.getElementById('partner').value = currentConfig.PartnerTag;
+  document.getElementById('version').value = currentConfig.Version;
+  document.getElementById('blogTemplate').value =
+    currentConfig.blogTemplate || '';
 }
+
+loadConfig();
 
 document.getElementById('save').onclick = async () => {
   const config = {
@@ -77,23 +84,46 @@ document.getElementById('save').onclick = async () => {
   await window.api.saveConfig(config);
   alert('保存しました');
 };
+const toggleBtn = document.getElementById('toggleConfig');
+const panel = document.getElementById('configPanel');
 
-loadConfig();
+toggleBtn.addEventListener('click', () => {
+  const isOpen = !panel.classList.contains('hidden');
+  panel.classList.toggle('hidden');
 
-ipcMain.handle('fetch-item', async (_, asin) => {
-  const config = loadConfig();
-
-  if (!config.CredentialId || !config.CredentialSecret) {
-    throw new Error('API設定が未入力です');
-  }
-
-  const apiClient = new ApiClient();
-  apiClient.credentialId = config.CredentialId;
-  apiClient.credentialSecret = config.CredentialSecret;
-  apiClient.version = config.Version;
-
-  const api = new DefaultApi(apiClient);
-
-  // GetItemsRequest を作って実行
+  toggleBtn.textContent = isOpen
+    ? '▶ Creators API 設定'
+    : '▼ Creators API 設定';
 });
 
+const toggleSetBtn = document.getElementById('toggleSettings');
+const panelset = document.getElementById('settingsPanel');
+
+toggleSetBtn.onclick = () => {
+  panelset.classList.toggle('hidden');
+};
+
+
+// 保存
+document.getElementById('saveConfig').onclick = async () => {
+  await window.api.saveConfig({
+    CredentialId: document.getElementById('cid').value.trim(),
+    CredentialSecret: document.getElementById('secret').value.trim(),
+    PartnerTag: document.getElementById('partner').value.trim(),
+    Version: document.getElementById('version').value,
+    blogTemplate: document.getElementById('blogTemplate').value
+  });
+
+  alert('保存しました');
+  loadConfig();
+};
+
+
+function renderBlogHTML(template, item) {
+  return template
+    .replaceAll('{title}', item.itemInfo?.title?.displayValue ?? '')
+    .replaceAll('{image}', item.images?.primary?.medium?.url ?? '')
+    .replaceAll('{price}',
+      item.offersV2?.listings?.[0]?.price?.displayAmount ?? '')
+    .replaceAll('{url}', item.detailPageURL ?? '');
+}

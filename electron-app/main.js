@@ -22,10 +22,12 @@ ipcMain.handle('load-config', () => {
   return loadConfig();
 });
 
-ipcMain.handle('save-config', (_, config) => {
-  saveConfig(config);
+ipcMain.handle('save-config', (_, newConfig) => {
+  const oldConfig = loadConfig();
+  saveConfig({ ...oldConfig, ...newConfig });
   return true;
 });
+
 /* ===== Creators API SDK（ローカル） ===== */
 const {
   ApiClient,
