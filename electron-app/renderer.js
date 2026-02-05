@@ -123,6 +123,8 @@ function renderBlogHTML(template, item) {
   return template
     .replaceAll('{title}', item.itemInfo?.title?.displayValue ?? '')
     .replaceAll('{image}', item.images?.primary?.medium?.url ?? '')
+    .replaceAll('{image-s}', item.images?.primary?.small?.url ?? '')
+    .replaceAll('{image-l}', item.images?.primary?.large?.url ?? '')
     .replaceAll('{price}',
       item.offersV2?.listings?.[0]?.price?.displayAmount ?? '')
     .replaceAll('{url}', item.detailPageURL ?? '');

@@ -1,12 +1,24 @@
 {
-  "name": "creatorsapi-electron",
+  "name": "amahari",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "io.github.kyukyunyorituryo.amahari",
+    "productName": "amahari",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
   },
   "dependencies": {
-    "electron": "^29.0.0",
-    "@amzn/creatorsapi-nodejs-sdk": "file:.."
+    "@amzn/creatorsapi-nodejs-sdk": "file:..",
+    "electron": "^29.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^26.7.0"
   }
 }
