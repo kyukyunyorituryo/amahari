@@ -84,6 +84,8 @@ ipcMain.handle('fetch-item', async (_event, asin) => {
   req.resources = [
     'itemInfo.title',
     'images.primary.medium',
+    'images.primary.large',
+    'images.primary.small',
     'offersV2.listings.price'
   ];
 
