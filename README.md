@@ -1,54 +1,63 @@
-# Creators API Node.js SDK Example
+# Amahari – Amazon Creators API Helper (Electron)
 
-## Prerequisites
+Amazon Creators API を使って  
+**ASIN または Amazon 商品URLから商品情報を取得し、  
+ブログ貼付用HTMLを生成するデスクトップアプリ**です。
 
-### Node.js Version Support
-- **Supported**: To run the SDK you need Node version 14 or higher.
+## ✨ 主な機能
 
-## Setup Instructions
+- ASIN / Amazon URL 自動判別
+- Creators API GetItems 対応
+- 商品情報をGUI表示
+- ブログ貼付用HTMLを自動生成
+- 設定（Credential / PartnerTag）をローカル保存
+- Windows向け Electron アプリ
 
-### 1. Install and Configure Node.js
+※ Amazon公式ロゴは使用していません。
 
-For Node.js installation, you can download it from the official website: https://nodejs.org/en/download
+---
+
+## 🖥 動作環境
+
+- Windows 10 / 11
+- Node.js 18+
+- Amazon Creators API アカウント
+
+---
+
+## 🚀 起動方法（開発）
 
 ```bash
-# Check Node.js version
-node --version
-```
-
-### 2. Install Dependencies
-```bash
-cd {path_to_dir}/creatorsapi-nodejs-sdk
+git clone https://github.com/yourname/amahari.git
+cd amahari/electron-app
 npm install
-npm run build
+npm start
 ```
+---
 
-### 3. Run Sample Code
-Navigate to the examples directory to run the samples.
+## ⚙ 初期設定
 
-```bash
-cd examples
-```
+起動後、以下を設定画面に入力してください：
 
-Before running the samples, you'll need to configure your API credentials in the sample files by replacing the following placeholders:
+-   CredentialId
+    
+-   CredentialSecret
+    
+-   PartnerTag
+    
+-   API Version（通常 2.3）
+    
 
-- `<YOUR CREDENTIAL ID>` - Your API credential ID
-- `<YOUR CREDENTIAL SECRET>` - Your API credential secret  
-- `<YOUR CREDENTIAL VERSION>` - Your credential version (e.g., "2.1" for NA, "2.2" for EU, "2.3" for FE region)
-- `<YOUR MARKETPLACE>` - Your marketplace to which you want to send the request (e.g., "www.amazon.com" for US marketplace)
-- `<YOUR PARTNER TAG>` - Your Partner Tag for the requested marketplace in applicable sample code snippet files
+※ これらは **ローカルにのみ保存**されます。
 
-Run the following commands to run the sample files:
+---
 
-**Get detailed product information:**
-```bash
-node sampleGetItems.js
-```
+## ⚠ 注意事項
 
-**Search for products:**
-```bash
-node sampleSearchItems.js
-```
+-   本アプリは Amazon 非公式ツールです
+    
+-   Amazon ロゴ・商標は使用していません
+    
+-   Creators API の利用規約を遵守してください
 
-#### Other Samples
-Check the `examples` directory for additional sample files with various API operations.
+This project is not affiliated with Amazon.com, Inc.

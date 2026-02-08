@@ -8,3 +8,5 @@ package-lock.json
 fetch.js
 .vscode/launch.json
 .babelrc
+out/
+release/
