@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
@@ -48,7 +48,28 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+const menuTemplate = [
+  {
+    label: 'アプリ',
+    submenu: [
+      { role: 'quit', label: '終了' }
+    ]
+  },
+  {
+    label: 'ヘルプ',
+    submenu: [
+      {
+        label: 'amahariの使い方',
+        click: async () => {
+          const { shell } = require('electron');
+          await shell.openExternal('https://kyukyunyorituryo.github.io/amahari/');
+        }
+      }
+    ]
+  }
+];
 
+Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
   win.loadFile('index.html');
 }
 
