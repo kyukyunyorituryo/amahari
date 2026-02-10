@@ -19,6 +19,9 @@
     "electron": "^29.0.0"
   },
   "devDependencies": {
-    "electron-builder": "^26.7.0"
+    "autoprefixer": "^10.4.24",
+    "electron-builder": "^26.7.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19"
   }
 }
