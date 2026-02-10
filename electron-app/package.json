@@ -2,6 +2,8 @@
   "name": "amahari",
   "version": "1.0.0",
   "main": "main.js",
+  "description": "Amazon Creators API を使った商品情報取得GUI",
+  "author": "kyukyunyorituryo",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder"
@@ -9,17 +11,28 @@
   "build": {
     "appId": "io.github.kyukyunyorituryo.amahari",
     "productName": "amahari",
+      "asar": true,
+  "files": [
+    "tailwind.css",
+    "main.js",
+    "preload.js",
+    "renderer.js",
+    "index.html",
+    "package.json",
+    "node_modules/**/*",
+    "amadist/**/*"
+  ],
     "win": {
       "target": "nsis",
       "icon": "icon.ico"
     }
   },
   "dependencies": {
-    "@amzn/creatorsapi-nodejs-sdk": "file:..",
-    "electron": "^29.0.0"
+    "superagent": "^10.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.24",
+    "electron": "30.5.1",
     "electron-builder": "^26.7.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19"

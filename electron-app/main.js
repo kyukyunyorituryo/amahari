@@ -33,7 +33,7 @@ const {
   ApiClient,
   DefaultApi,
   GetItemsRequestContent
-} = require('../dist/index');
+} = require('./amadist/index');
 
 /* ===== key.json ===== */
 
