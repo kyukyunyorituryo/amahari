@@ -10,3 +10,5 @@ fetch.js
 .babelrc
 out/
 release/
+electron-app/dist
+electron-app/node_modules
